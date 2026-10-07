@@ -13,15 +13,12 @@ import { useCart, formatPrice } from './cart-context'
  * no secret keys, maximum security. The publishable key is safe to expose in the browser.
  */
 
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51NvhyWDl7OTnai9go7rmWX0J6ShYJzJvyRdewRspiksU9wVY6LxkKr78nVXz7HycJJLMVLMs5Hz5njzTcOVUfP8f00qM9xJJM7'
+
 let stripePromise: Promise<Stripe | null> | null = null
 function getStripe(): Promise<Stripe | null> {
   if (!stripePromise) {
-    const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    if (!key) {
-      console.error('Stripe publishable key is missing. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY in your environment.')
-      return Promise.resolve(null)
-    }
-    stripePromise = loadStripe(key)
+    stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY)
   }
   return stripePromise
 }
