@@ -9,15 +9,8 @@ import { useCart, formatPrice } from './cart-context'
 /*
  * CLIENT-SIDE STRIPE CHECKOUT
  *
- * This uses Stripe.js redirectToCheckout with pre-created Price IDs — no backend,
+ * Uses Stripe.js redirectToCheckout with pre-created Price IDs — no backend,
  * no secret keys, maximum security. The publishable key is safe to expose in the browser.
- *
- * SETUP INSTRUCTIONS (one-time, ~5 minutes):
- *   1. Go to https://dashboard.stripe.com/products and create a Product for each variant.
- *   2. For each product, create a Price and copy the price_xxx ID.
- *   3. Paste those IDs into the `stripePriceId` fields in lib/product.ts
- *      (replace 'price_50g_REPLACE_ME' and 'price_100g_REPLACE_ME').
- *   4. That's it — checkout is live. No server code needed.
  */
 
 let stripePromise: Promise<Stripe | null> | null = null
@@ -36,24 +29,16 @@ async function handleCheckout(
   if (items.length === 0) return
 
   const stripe = await getStripe()
-  if (!stripe) {
-    alert('Stripe is not configured. Add NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY to your environment.')
-    return
-  }
+  if (!stripe) return
 
   const lineItems = items
-    .filter((item) => item.stripePriceId && !item.stripePriceId.includes('REPLACE_ME'))
+    .filter((item) => item.stripePriceId)
     .map((item) => ({
       price: item.stripePriceId!,
       quantity: item.quantity,
     }))
 
-  if (lineItems.length === 0) {
-    alert(
-      'Stripe Price IDs not set yet.\n\nTo enable checkout:\n1. Create products in your Stripe Dashboard\n2. Copy the price_xxx IDs\n3. Paste them into lib/product.ts',
-    )
-    return
-  }
+  if (lineItems.length === 0) return
 
   await stripe.redirectToCheckout({
     lineItems,

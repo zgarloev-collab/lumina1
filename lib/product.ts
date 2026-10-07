@@ -10,8 +10,7 @@ export interface ProductVariant {
   note?: string
   price: number
   compareAtPrice?: number
-  /** Stripe Price ID from your Stripe Dashboard → Products.
-   *  Create matching products/prices in Stripe and paste the price_xxx IDs here. */
+  /** Stripe Price ID from your Stripe Dashboard → Products. */
   stripePriceId?: string
 }
 
@@ -20,8 +19,8 @@ export const product = {
   rating: 5,
   reviewCount: 142,
   variants: [
-    { id: '50g', label: '50g', note: 'Standard', price: 49, stripePriceId: 'price_50g_REPLACE_ME' },
-    { id: '100g', label: '100g', note: 'Value Pack - Save 15%', price: 83.3, compareAtPrice: 98, stripePriceId: 'price_100g_REPLACE_ME' },
+    { id: '50g', label: '50g', note: 'Standard', price: 49, stripePriceId: 'price_1UNyc2Dl7OTnai9grfyOIVcA' },
+    { id: '100g', label: '100g', note: 'Value Pack - Save 15%', price: 83.3, compareAtPrice: 98, stripePriceId: 'price_1UNynyDl7OTnai9gRaRAxCod' },
   ] satisfies ProductVariant[],
   images: [
     {
