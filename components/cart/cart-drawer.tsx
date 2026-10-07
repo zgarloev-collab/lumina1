@@ -17,7 +17,10 @@ let stripePromise: Promise<Stripe | null> | null = null
 function getStripe(): Promise<Stripe | null> {
   if (!stripePromise) {
     const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    if (!key) return Promise.resolve(null)
+    if (!key) {
+      console.error('Stripe publishable key is missing. Set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY in your environment.')
+      return Promise.resolve(null)
+    }
     stripePromise = loadStripe(key)
   }
   return stripePromise
@@ -25,11 +28,17 @@ function getStripe(): Promise<Stripe | null> {
 
 async function handleCheckout(
   items: { variantId: string; variantLabel: string; quantity: number; stripePriceId?: string }[],
-) {
-  if (items.length === 0) return
+): Promise<void> {
+  if (items.length === 0) {
+    console.warn('Checkout called with empty cart')
+    return
+  }
 
   const stripe = await getStripe()
-  if (!stripe) return
+  if (!stripe) {
+    alert('Payment system is not configured. Please contact support.')
+    return
+  }
 
   const lineItems = items
     .filter((item) => item.stripePriceId)
@@ -38,14 +47,23 @@ async function handleCheckout(
       quantity: item.quantity,
     }))
 
-  if (lineItems.length === 0) return
+  if (lineItems.length === 0) {
+    console.error('No Stripe Price IDs found in cart items')
+    alert('Unable to start checkout. Please refresh the page and try again.')
+    return
+  }
 
-  await stripe.redirectToCheckout({
+  const result = await stripe.redirectToCheckout({
     lineItems,
     mode: 'payment',
     successUrl: `${window.location.origin}/success`,
     cancelUrl: `${window.location.origin}/cart`,
   })
+
+  if (result.error) {
+    console.error('Stripe redirect failed:', result.error.message)
+    alert(`Checkout error: ${result.error.message}`)
+  }
 }
 
 export function CartDrawer() {
@@ -199,15 +217,15 @@ export function CartDrawer() {
             </p>
             <button
               type="button"
-              disabled={isRedirecting}
               onClick={async () => {
+                if (isRedirecting) return
                 setIsRedirecting(true)
                 await handleCheckout(items)
                 setIsRedirecting(false)
               }}
-              className="group relative flex h-14 w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-[#D4AF37] text-xs font-semibold uppercase tracking-[0.2em] text-[#1E2522] shadow-[0_10px_30px_-12px_rgba(212,175,55,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C9A230] hover:shadow-[0_18px_40px_-14px_rgba(212,175,55,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E2522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F6F4] disabled:translate-y-0 disabled:opacity-70"
+              className="group relative flex h-14 w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-[#D4AF37] text-xs font-semibold uppercase tracking-[0.2em] text-[#1E2522] shadow-[0_10px_30px_-12px_rgba(212,175,55,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C9A230] hover:shadow-[0_18px_40px_-14px_rgba(212,175,55,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E2522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F6F4]"
             >
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" />
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" />
               <span className="relative flex items-center gap-2">
                 {isRedirecting ? (
                   <>
