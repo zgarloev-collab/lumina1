@@ -3,7 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ShoppingBag } from 'lucide-react'
-import { BRAND, CART_URL } from '@/lib/product'
+import { BRAND } from '@/lib/product'
+import { useCart } from '@/components/cart/cart-context'
 import { cn } from '@/lib/utils'
 
 const links = [
@@ -13,6 +14,7 @@ const links = [
 
 export function SiteHeader() {
   const pathname = usePathname()
+  const { itemCount, openCart } = useCart()
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#1E2522]/10 bg-[#F4F6F4]/85 backdrop-blur-md supports-[backdrop-filter]:bg-[#F4F6F4]/70">
@@ -46,13 +48,19 @@ export function SiteHeader() {
             })}
           </ul>
 
-          <a
-            href={CART_URL}
+          <button
+            type="button"
+            onClick={openCart}
             className="relative ml-1 flex size-10 items-center justify-center rounded-full text-[#1E2522] transition-colors hover:bg-[#1E2522]/5"
+            aria-label={`Open cart${itemCount > 0 ? ` (${itemCount} items)` : ''}`}
           >
             <ShoppingBag className="size-5" strokeWidth={1.5} aria-hidden="true" />
-            <span className="sr-only">Cart</span>
-          </a>
+            {itemCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex size-5 items-center justify-center rounded-full bg-[#D4AF37] text-[10px] font-bold text-[#1E2522]">
+                {itemCount}
+              </span>
+            )}
+          </button>
         </nav>
       </div>
     </header>

@@ -2,6 +2,8 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
+import { CartProvider } from '@/components/cart/cart-context'
+import { CartDrawer } from '@/components/cart/cart-drawer'
 import './globals.css'
 
 const heading = Cormorant_Garamond({
@@ -43,8 +45,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${heading.variable} ${body.variable}`} style={{ background: '#F4F6F4' }}>
       <body className="font-sans antialiased" style={{ margin: 0 }}>
-        <SiteHeader />
-        {children}
+        <CartProvider>
+          <SiteHeader />
+          {children}
+          <CartDrawer />
+        </CartProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

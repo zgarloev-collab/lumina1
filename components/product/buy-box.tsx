@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, FlaskConical, Gem, Leaf, Minus, Plus, Star } from 'lucide-react'
-import { BUY_NOW_URL, formatPrice, product } from '@/lib/product'
+import { ArrowRight, Check, FlaskConical, Gem, Leaf, Minus, Plus, Star } from 'lucide-react'
+import { formatPrice, product } from '@/lib/product'
+import { useCart } from '@/components/cart/cart-context'
 import { cn } from '@/lib/utils'
 
 const MAX_QUANTITY = 10
@@ -13,21 +14,18 @@ const usps = [
   { icon: FlaskConical, label: 'Third-Party Lab Tested' },
 ]
 
-export function ProductBuyBox({ buyNowUrl = BUY_NOW_URL }: { buyNowUrl?: string }) {
+export function ProductBuyBox() {
+  const { addItem } = useCart()
   const [variantId, setVariantId] = useState(product.variants[0].id)
   const [quantity, setQuantity] = useState(1)
+  const [added, setAdded] = useState(false)
   const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0]
 
-  const checkoutHref = (() => {
-    try {
-      const url = new URL(buyNowUrl)
-      url.searchParams.set('variant', variant.id)
-      url.searchParams.set('quantity', String(quantity))
-      return url.toString()
-    } catch {
-      return buyNowUrl
-    }
-  })()
+  const handleAddToCart = () => {
+    addItem(variant.id, quantity)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+  }
 
   return (
     <div className="flex flex-col gap-8">
@@ -136,16 +134,26 @@ export function ProductBuyBox({ buyNowUrl = BUY_NOW_URL }: { buyNowUrl?: string 
         </div>
       </div>
 
-      <a
-        href={checkoutHref}
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        type="button"
+        onClick={handleAddToCart}
         className="group relative flex h-16 w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-[#D4AF37] text-sm font-semibold uppercase tracking-[0.24em] text-[#1E2522] shadow-[0_10px_30px_-12px_rgba(212,175,55,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C9A230] hover:shadow-[0_18px_40px_-14px_rgba(212,175,55,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E2522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F6F4]"
       >
         <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" />
-        <span className="relative">Buy Now · {formatPrice(variant.price * quantity)}</span>
-        <ArrowRight className="relative size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-      </a>
+        <span className="relative flex items-center gap-2">
+          {added ? (
+            <>
+              <Check className="size-4" aria-hidden="true" />
+              Added to Cart
+            </>
+          ) : (
+            <>
+              Buy Now · {formatPrice(variant.price * quantity)}
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+            </>
+          )}
+        </span>
+      </button>
 
       <p className="text-sm text-[#1E2522]/65">
         Free Worldwide Shipping Always
