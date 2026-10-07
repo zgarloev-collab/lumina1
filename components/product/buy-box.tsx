@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, FlaskConical, Gem, Leaf, Minus, Plus, ShieldCheck, Star, Truck } from 'lucide-react'
+import { ArrowRight, FlaskConical, Gem, Leaf, Minus, Plus, Star } from 'lucide-react'
 import { BUY_NOW_URL, formatPrice, product } from '@/lib/product'
 import { cn } from '@/lib/utils'
 
@@ -147,16 +147,9 @@ export function ProductBuyBox({ buyNowUrl = BUY_NOW_URL }: { buyNowUrl?: string 
         <ArrowRight className="relative size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
       </a>
 
-      <ul className="flex flex-wrap gap-x-6 gap-y-2 text-xs text-[#1E2522]/65">
-        <li className="flex items-center gap-2">
-          <Truck className="size-4" strokeWidth={1.5} aria-hidden="true" />
-          Free shipping over $75
-        </li>
-        <li className="flex items-center gap-2">
-          <ShieldCheck className="size-4" strokeWidth={1.5} aria-hidden="true" />
-          60-day purity guarantee
-        </li>
-      </ul>
+      <p className="text-sm text-[#1E2522]/65">
+        Free Worldwide Shipping Always
+      </p>
     </div>
   )
 }
