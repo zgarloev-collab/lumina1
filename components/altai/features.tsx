@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import { AltaiIcon } from './icon'
 import { Reveal } from './reveal'
 
@@ -21,7 +20,7 @@ const features: Feature[] = [
   },
   {
     icon: 'shield',
-    title: 'Lab Certified',
+    title: 'Third-Party Lab Certified',
     text: 'Strict third-party laboratory verification, 100% safe, clean, and heavy metal tested. Only batches that pass strict limits are released.',
   },
 ]

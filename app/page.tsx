@@ -1,7 +1,7 @@
 import { AltaiHero } from '@/components/altai/hero'
 import { AltaiFeatures } from '@/components/altai/features'
-import { AltaiSource } from '@/components/altai/source'
 import { AltaiRitual } from '@/components/altai/ritual'
+import { AltaiSource } from '@/components/altai/source'
 import { AltaiReviewsFaq } from '@/components/altai/reviews-faq'
 
 export default function Page() {
@@ -9,8 +9,8 @@ export default function Page() {
     <main>
       <AltaiHero />
       <AltaiFeatures />
-      <AltaiSource />
       <AltaiRitual />
+      <AltaiSource />
       <AltaiReviewsFaq />
     </main>
   )
