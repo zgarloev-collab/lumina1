@@ -17,6 +17,7 @@ export interface CartItem {
   price: number
   image: string
   title: string
+  stripePriceId?: string
 }
 
 interface CartContextValue {
@@ -63,6 +64,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           price: variant.price,
           image: product.images[0]?.src ?? '/images/product-jar.png',
           title: product.title,
+          stripePriceId: variant.stripePriceId,
         },
       ]
     })

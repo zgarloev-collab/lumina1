@@ -3,76 +3,69 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Minus, Plus, ShoppingBag, X } from 'lucide-react'
+import { loadStripe, type Stripe } from '@stripe/stripe-js'
 import { useCart, formatPrice } from './cart-context'
 
-/**
- * Stripe Checkout — Front-end routing architecture
+/*
+ * CLIENT-SIDE STRIPE CHECKOUT
  *
- * 1. Replace the placeholder key below with your Stripe publishable key (pk_live_... or pk_test_...)
- * 2. Set up a backend endpoint (e.g. /api/checkout or a Supabase Edge Function) that creates
- *    a Stripe Checkout Session using your secret key and returns the session URL.
- * 3. In handleCheckout(), POST the cart line items to that endpoint, then redirect to the
- *    returned Stripe Checkout URL.
+ * This uses Stripe.js redirectToCheckout with pre-created Price IDs — no backend,
+ * no secret keys, maximum security. The publishable key is safe to expose in the browser.
  *
- * Example backend payload shape:
- *   { items: [{ variantId, variantLabel, quantity, price }] }
- *
- * The backend creates a session with:
- *   line_items: items.map(i => ({ price_data: { currency: 'usd', product_data: { name: i.variantLabel }, unit_amount: i.price * 100 }, quantity: i.quantity }))
- *   mode: 'payment'
- *   success_url: '/success'
- *   cancel_url: '/shop'
+ * SETUP INSTRUCTIONS (one-time, ~5 minutes):
+ *   1. Go to https://dashboard.stripe.com/products and create a Product for each variant.
+ *   2. For each product, create a Price and copy the price_xxx ID.
+ *   3. Paste those IDs into the `stripePriceId` fields in lib/product.ts
+ *      (replace 'price_50g_REPLACE_ME' and 'price_100g_REPLACE_ME').
+ *   4. That's it — checkout is live. No server code needed.
  */
 
-const STRIPE_PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ''
-
-// Set this to your backend endpoint that creates Stripe Checkout Sessions
-const CHECKOUT_API_ENDPOINT = '/api/checkout'
+let stripePromise: Promise<Stripe | null> | null = null
+function getStripe(): Promise<Stripe | null> {
+  if (!stripePromise) {
+    const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+    if (!key) return Promise.resolve(null)
+    stripePromise = loadStripe(key)
+  }
+  return stripePromise
+}
 
 async function handleCheckout(
-  items: { variantId: string; variantLabel: string; quantity: number; price: number }[],
+  items: { variantId: string; variantLabel: string; quantity: number; stripePriceId?: string }[],
 ) {
   if (items.length === 0) return
 
-  // --- Option A: Redirect to a Stripe hosted checkout session via your backend ---
-  // Uncomment the block below once your backend endpoint is ready:
-
-  // try {
-  //   const res = await fetch(CHECKOUT_API_ENDPOINT, {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({ items }),
-  //   })
-  //   if (!res.ok) throw new Error('Failed to create checkout session')
-  //   const data = await res.json()
-  //   // Redirect to Stripe-hosted checkout page
-  //   window.location.href = data.url
-  // } catch (err) {
-  //   console.error('Checkout error:', err)
-  //   alert('Could not start checkout. Please try again.')
-  // }
-
-  // --- Option B: Redirect using Stripe.js (load Stripe script dynamically) ---
-  // Uncomment and adapt once you have your publishable key and a backend:
-
-  // const stripe = await loadStripe(STRIPE_PUBLISHABLE_KEY)
-  // const res = await fetch(CHECKOUT_API_ENDPOINT, { ... })
-  // const { sessionId } = await res.json()
-  // await stripe?.redirectToCheckout({ sessionId })
-
-  // --- Placeholder: for now, redirect to success page for demo purposes ---
-  if (STRIPE_PUBLISHABLE_KEY) {
-    console.info('Stripe key detected — wire up your backend endpoint to enable live checkout.')
-  } else {
-    console.info('No Stripe key set — using demo redirect. Add NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY to .env to go live.')
+  const stripe = await getStripe()
+  if (!stripe) {
+    alert('Stripe is not configured. Add NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY to your environment.')
+    return
   }
 
-  // Temporary demo redirect — remove once Stripe backend is wired
-  window.location.href = '/success'
+  const lineItems = items
+    .filter((item) => item.stripePriceId && !item.stripePriceId.includes('REPLACE_ME'))
+    .map((item) => ({
+      price: item.stripePriceId!,
+      quantity: item.quantity,
+    }))
+
+  if (lineItems.length === 0) {
+    alert(
+      'Stripe Price IDs not set yet.\n\nTo enable checkout:\n1. Create products in your Stripe Dashboard\n2. Copy the price_xxx IDs\n3. Paste them into lib/product.ts',
+    )
+    return
+  }
+
+  await stripe.redirectToCheckout({
+    lineItems,
+    mode: 'payment',
+    successUrl: `${window.location.origin}/success`,
+    cancelUrl: `${window.location.origin}/cart`,
+  })
 }
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, updateQuantity, removeItem, subtotal, itemCount, clearCart } = useCart()
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   // Lock body scroll while drawer is open
   useEffect(() => {
@@ -221,11 +214,25 @@ export function CartDrawer() {
             </p>
             <button
               type="button"
-              onClick={() => handleCheckout(items)}
-              className="group relative flex h-14 w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-[#D4AF37] text-xs font-semibold uppercase tracking-[0.2em] text-[#1E2522] shadow-[0_10px_30px_-12px_rgba(212,175,55,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C9A230] hover:shadow-[0_18px_40px_-14px_rgba(212,175,55,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E2522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F6F4]"
+              disabled={isRedirecting}
+              onClick={async () => {
+                setIsRedirecting(true)
+                await handleCheckout(items)
+                setIsRedirecting(false)
+              }}
+              className="group relative flex h-14 w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-[#D4AF37] text-xs font-semibold uppercase tracking-[0.2em] text-[#1E2522] shadow-[0_10px_30px_-12px_rgba(212,175,55,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C9A230] hover:shadow-[0_18px_40px_-14px_rgba(212,175,55,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E2522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F6F4] disabled:translate-y-0 disabled:opacity-70"
             >
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 group-hover:translate-x-full" aria-hidden="true" />
-              <span className="relative">Proceed to Checkout</span>
+              <span className="relative flex items-center gap-2">
+                {isRedirecting ? (
+                  <>
+                    <span className="size-4 animate-spin rounded-full border-2 border-[#1E2522]/30 border-t-[#1E2522]" aria-hidden="true" />
+                    Redirecting…
+                  </>
+                ) : (
+                  'Proceed to Checkout'
+                )}
+              </span>
             </button>
             <button
               type="button"
