@@ -3,64 +3,30 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Minus, Plus, ShoppingBag, X } from 'lucide-react'
-import { loadStripe, type Stripe } from '@stripe/stripe-js'
 import { useCart, formatPrice } from './cart-context'
 
 /*
- * CLIENT-SIDE STRIPE CHECKOUT
+ * STRIPE PAYMENT LINK CHECKOUT
  *
- * Uses Stripe.js redirectToCheckout with pre-created Price IDs — no backend,
- * no secret keys, maximum security. The publishable key is safe to expose in the browser.
+ * Redirects directly to Stripe-hosted Payment Links — no SDK, no backend,
+ * no freezing. The 100g link is the primary checkout destination.
+ * TODO: replace FALLBACK_LINK with the real 50g buy.stripe.com link once available.
  */
 
-const STRIPE_PUBLISHABLE_KEY = 'pk_live_51NvhyWDl7OTnai9go7rmWX0J6ShYJzJvyRdewRspiksU9wVY6LxkKr78nVXz7HycJJLMVLMs5Hz5njzTcOVUfP8f00qM9xJJM7'
+const PAYMENT_LINK_100G = 'https://buy.stripe.com/9B67sL2aF9IIf7P0w0dby01'
+const PAYMENT_LINK_50G = PAYMENT_LINK_100G
 
-let stripePromise: Promise<Stripe | null> | null = null
-function getStripe(): Promise<Stripe | null> {
-  if (!stripePromise) {
-    stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY)
-  }
-  return stripePromise
-}
+function handleCheckout(
+  items: { variantId: string; variantLabel: string; quantity: number }[],
+): void {
+  if (items.length === 0) return
 
-async function handleCheckout(
-  items: { variantId: string; variantLabel: string; quantity: number; stripePriceId?: string }[],
-): Promise<void> {
-  if (items.length === 0) {
-    console.warn('Checkout called with empty cart')
-    return
-  }
+  const has100g = items.some((item) => item.variantId === '100g')
+  const has50g = items.some((item) => item.variantId === '50g')
 
-  const stripe = await getStripe()
-  if (!stripe) {
-    alert('Payment system is not configured. Please contact support.')
-    return
-  }
+  const url = has100g ? PAYMENT_LINK_100G : has50g ? PAYMENT_LINK_50G : PAYMENT_LINK_100G
 
-  const lineItems = items
-    .filter((item) => item.stripePriceId)
-    .map((item) => ({
-      price: item.stripePriceId!,
-      quantity: item.quantity,
-    }))
-
-  if (lineItems.length === 0) {
-    console.error('No Stripe Price IDs found in cart items')
-    alert('Unable to start checkout. Please refresh the page and try again.')
-    return
-  }
-
-  const result = await stripe.redirectToCheckout({
-    lineItems,
-    mode: 'payment',
-    successUrl: `${window.location.origin}/success`,
-    cancelUrl: `${window.location.origin}/cart`,
-  })
-
-  if (result.error) {
-    console.error('Stripe redirect failed:', result.error.message)
-    alert(`Checkout error: ${result.error.message}`)
-  }
+  window.location.href = url
 }
 
 export function CartDrawer() {
@@ -214,11 +180,10 @@ export function CartDrawer() {
             </p>
             <button
               type="button"
-              onClick={async () => {
+              onClick={() => {
                 if (isRedirecting) return
                 setIsRedirecting(true)
-                await handleCheckout(items)
-                setIsRedirecting(false)
+                handleCheckout(items)
               }}
               className="group relative flex h-14 w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-[#D4AF37] text-xs font-semibold uppercase tracking-[0.2em] text-[#1E2522] shadow-[0_10px_30px_-12px_rgba(212,175,55,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C9A230] hover:shadow-[0_18px_40px_-14px_rgba(212,175,55,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E2522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F6F4]"
             >
