@@ -1,0 +1,155 @@
+{% render 'altai-assets' %}
+
+{%- assign cta_url = section.settings.button_link | default: routes.all_products_collection_url -%}
+{%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
+{%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+
+<section class="altai-section altai-section--dark altai-pad" id="altai-reviews-{{ section.id }}" aria-labelledby="altai-reviews-title-{{ section.id }}">
+  <div class="altai-container">
+    <header class="altai-section-head" data-altai-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="altai-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="altai-heading altai-h2" id="altai-reviews-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.rating_text != blank -%}
+        <p class="altai-rating">
+          <span class="altai-stars" aria-hidden="true">
+            {%- for i in (1..5) -%}{% render 'altai-icon', name: 'star' %}{%- endfor -%}
+          </span>
+          {{ section.settings.rating_text | escape }}
+        </p>
+      {%- endif -%}
+    </header>
+
+    {%- if review_blocks.size > 0 -%}
+      <div class="altai-reviews">
+        {%- for block in review_blocks -%}
+          <figure class="altai-review" {{ block.shopify_attributes }} data-altai-reveal style="--altai-delay: {{ forloop.index0 | modulo: 3 | times: 0.1 }}s">
+            <span class="altai-stars" role="img" aria-label="Rated {{ block.settings.rating }} out of 5">
+              {%- for i in (1..block.settings.rating) -%}{% render 'altai-icon', name: 'star' %}{%- endfor -%}
+            </span>
+            <blockquote>{{ block.settings.quote }}</blockquote>
+            <figcaption>
+              <strong>{{ block.settings.author | escape }}</strong>
+              <span>{{ block.settings.detail | escape }}</span>
+            </figcaption>
+          </figure>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if faq_blocks.size > 0 -%}
+      <div class="altai-faq-wrap">
+        <div data-altai-reveal>
+          {%- if section.settings.faq_eyebrow != blank -%}
+            <p class="altai-eyebrow">{{ section.settings.faq_eyebrow | escape }}</p>
+          {%- endif -%}
+          <h2 class="altai-heading altai-h2">{{ section.settings.faq_heading }}</h2>
+          {%- if section.settings.faq_text != blank -%}
+            <p class="altai-lede">{{ section.settings.faq_text }}</p>
+          {%- endif -%}
+        </div>
+
+        <div class="altai-faq" data-altai-faq data-altai-reveal>
+          {%- for block in faq_blocks -%}
+            <details {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}>
+              <summary>
+                {{ block.settings.question | escape }}
+                <span class="altai-faq__icon" aria-hidden="true"></span>
+              </summary>
+              <div class="altai-faq__answer">{{ block.settings.answer }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.closing_heading != blank -%}
+      <div class="altai-closing" data-altai-reveal>
+        <h2 class="altai-heading altai-h2">{{ section.settings.closing_heading }}</h2>
+        {%- if section.settings.closing_text != blank -%}
+          <p class="altai-lede">{{ section.settings.closing_text }}</p>
+        {%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <a class="altai-btn" href="{{ cta_url }}">
+            {{ section.settings.button_label | escape }}
+            {% render 'altai-icon', name: 'arrow' %}
+          </a>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <small>{{ section.settings.disclaimer | escape }}</small>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- if faq_blocks.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in faq_blocks -%}
+    {
+      "@type": "Question",
+      "name": {{ block.settings.question | json }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} }
+    }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Altai · Reviews & FAQ",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Reviews" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Rituals in Real Life" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Felt from the <em>first morning</em>" },
+    { "type": "text", "id": "rating_text", "label": "Rating summary", "default": "4.9 / 5 from 2,400+ verified reviews" },
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_eyebrow", "label": "FAQ eyebrow", "default": "Questions" },
+    { "type": "inline_richtext", "id": "faq_heading", "label": "FAQ heading", "default": "Everything you <em>need to know</em>" },
+    { "type": "inline_richtext", "id": "faq_text", "label": "FAQ intro", "default": "Still curious? Our team replies to every message within one business day." },
+    { "type": "header", "content": "Closing call to action" },
+    { "type": "inline_richtext", "id": "closing_heading", "label": "Heading", "default": "Bring the mountain <em>home</em>" },
+    { "type": "inline_richtext", "id": "closing_text", "label": "Text", "default": "Free shipping on every order. 60-day ritual guarantee — love it, or your money back." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Pure Resin" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "disclaimer", "label": "Disclaimer", "default": "These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease." }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "inline_richtext", "id": "quote", "label": "Quote", "default": "Clean, steady energy through the afternoon — and no crash." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Daniel R." },
+        { "type": "text", "id": "detail", "label": "Detail", "default": "Verified buyer" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What does it taste like?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Earthy, smoky and slightly bitter, with a deep mineral finish.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Altai · Reviews & FAQ",
+      "blocks": [
+        { "type": "review" }, { "type": "review" }, { "type": "review" },
+        { "type": "faq" }, { "type": "faq" }, { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}

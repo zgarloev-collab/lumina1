@@ -1,0 +1,723 @@
+/* Altai Shilajit — landing page styles (scoped to .altai-section) */
+
+.altai-section {
+  --altai-bg: #f4f6f4;
+  --altai-bg-dark: #1e2522;
+  --altai-text: #0d110f;
+  --altai-text-muted: rgba(13, 17, 15, 0.68);
+  --altai-light: #f4f6f4;
+  --altai-light-muted: rgba(244, 246, 244, 0.72);
+  --altai-gold: #d4af37;
+  --altai-gold-deep: #b08c22;
+  --altai-line: rgba(13, 17, 15, 0.12);
+  --altai-line-light: rgba(244, 246, 244, 0.14);
+  --altai-font-heading: var(--altai-heading-family, 'Cormorant Garamond'), 'Times New Roman', serif;
+  --altai-font-body: var(--altai-body-family, 'Inter'), system-ui, -apple-system, sans-serif;
+  --altai-radius: 2px;
+  --altai-max: 1240px;
+
+  position: relative;
+  background: var(--altai-bg);
+  color: var(--altai-text);
+  font-family: var(--altai-font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.altai-section *,
+.altai-section *::before,
+.altai-section *::after {
+  box-sizing: border-box;
+}
+
+.altai-section--dark {
+  background: var(--altai-bg-dark);
+  color: var(--altai-light);
+}
+
+.altai-container {
+  width: 100%;
+  max-width: var(--altai-max);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.altai-pad {
+  padding-top: 5.5rem;
+  padding-bottom: 5.5rem;
+}
+
+@media (min-width: 990px) {
+  .altai-container { padding: 0 2.5rem; }
+  .altai-pad { padding-top: 8rem; padding-bottom: 8rem; }
+}
+
+/* ---------- Typography ---------- */
+
+.altai-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  font-family: var(--altai-font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--altai-gold-deep);
+}
+
+.altai-section--dark .altai-eyebrow,
+.altai-hero .altai-eyebrow {
+  color: var(--altai-gold);
+}
+
+.altai-eyebrow::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+}
+
+.altai-heading {
+  margin: 0;
+  font-family: var(--altai-font-heading);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: inherit;
+  text-wrap: balance;
+}
+
+.altai-heading em {
+  font-style: italic;
+  color: var(--altai-gold);
+}
+
+.altai-section:not(.altai-section--dark):not(.altai-hero) .altai-heading em {
+  color: var(--altai-gold-deep);
+}
+
+.altai-h1 { font-size: clamp(2.75rem, 7vw, 5.75rem); }
+.altai-h2 { font-size: clamp(2.25rem, 4.6vw, 3.75rem); }
+.altai-h3 { font-size: clamp(1.5rem, 2.2vw, 1.85rem); line-height: 1.15; }
+
+.altai-lede {
+  margin: 1.5rem 0 0;
+  max-width: 38rem;
+  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+  color: var(--altai-text-muted);
+  text-wrap: pretty;
+}
+
+.altai-section--dark .altai-lede,
+.altai-hero .altai-lede {
+  color: var(--altai-light-muted);
+}
+
+.altai-section-head {
+  max-width: 44rem;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.altai-section-head .altai-lede { margin-left: auto; margin-right: auto; }
+
+/* ---------- Buttons ---------- */
+
+.altai-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0 2.25rem;
+  border: 1px solid var(--altai-gold);
+  border-radius: var(--altai-radius);
+  background: var(--altai-gold);
+  color: var(--altai-text);
+  font-family: var(--altai-font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.altai-btn:hover {
+  background: var(--altai-gold-deep);
+  border-color: var(--altai-gold-deep);
+  color: var(--altai-text);
+  box-shadow: 0 14px 34px -14px rgba(176, 140, 34, 0.75);
+  transform: translateY(-1px);
+}
+
+.altai-btn:focus-visible {
+  outline: 2px solid var(--altai-gold);
+  outline-offset: 3px;
+}
+
+.altai-btn svg { width: 1rem; height: 1rem; transition: transform 0.3s ease; }
+.altai-btn:hover svg { transform: translateX(3px); }
+
+.altai-btn--outline {
+  background: transparent;
+  color: var(--altai-gold);
+}
+
+.altai-btn--outline:hover {
+  background: var(--altai-gold);
+  border-color: var(--altai-gold);
+  color: var(--altai-text);
+}
+
+.altai-section:not(.altai-section--dark) .altai-btn--outline {
+  color: var(--altai-text);
+  border-color: var(--altai-text);
+}
+
+.altai-section:not(.altai-section--dark) .altai-btn--outline:hover {
+  background: var(--altai-text);
+  color: var(--altai-light);
+  box-shadow: none;
+}
+
+.altai-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.25rem;
+  opacity: 0.85;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.altai-link:hover { opacity: 1; color: var(--altai-gold); }
+
+/* ---------- 1. Hero ---------- */
+
+.altai-hero {
+  display: flex;
+  align-items: flex-end;
+  min-height: min(100svh, 920px);
+  overflow: hidden;
+  background: var(--altai-bg-dark);
+  color: var(--altai-light);
+  isolation: isolate;
+}
+
+@media (min-width: 990px) {
+  .altai-hero { align-items: center; }
+}
+
+.altai-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.altai-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.04);
+  animation: altai-hero-zoom 14s ease-out forwards;
+}
+
+@keyframes altai-hero-zoom {
+  to { transform: scale(1); }
+}
+
+.altai-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(13, 17, 15, 0.15) 0%, rgba(13, 17, 15, 0.35) 45%, rgba(13, 17, 15, 0.88) 100%),
+    linear-gradient(90deg, rgba(13, 17, 15, 0.7) 0%, rgba(13, 17, 15, 0.1) 70%);
+}
+
+.altai-hero__inner {
+  padding-top: 8rem;
+  padding-bottom: 4.5rem;
+}
+
+.altai-hero__content { max-width: 46rem; }
+
+.altai-hero__usps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.altai-hero__usps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--altai-line-light);
+  border-radius: 999px;
+  background: rgba(13, 17, 15, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: 0.85rem;
+  color: var(--altai-light);
+}
+
+.altai-hero__usps li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--altai-gold);
+}
+
+.altai-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+}
+
+.altai-hero__trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  margin: 3.5rem 0 0;
+  padding: 1.75rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--altai-line-light);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--altai-light-muted);
+}
+
+.altai-hero__trust strong {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-family: var(--altai-font-heading);
+  font-size: 1.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--altai-light);
+}
+
+/* ---------- 2. Features grid ---------- */
+
+.altai-features {
+  display: grid;
+  gap: 1px;
+  background: var(--altai-line);
+  border: 1px solid var(--altai-line);
+}
+
+@media (min-width: 750px) {
+  .altai-features { grid-template-columns: repeat(3, 1fr); }
+}
+
+.altai-feature {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2.75rem 2rem;
+  background: var(--altai-bg);
+  transition: background-color 0.4s ease;
+}
+
+.altai-feature:hover { background: #fff; }
+
+@media (min-width: 990px) {
+  .altai-feature { padding: 3.5rem 2.75rem; }
+}
+
+.altai-feature__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.altai-feature__icon {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--altai-gold);
+  border-radius: 50%;
+  color: var(--altai-gold-deep);
+}
+
+.altai-feature__icon svg { width: 1.4rem; height: 1.4rem; }
+
+.altai-feature__num {
+  font-family: var(--altai-font-heading);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--altai-text-muted);
+}
+
+.altai-feature p {
+  margin: 0;
+  color: var(--altai-text-muted);
+}
+
+/* ---------- 3. Source split ---------- */
+
+.altai-split {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 990px) {
+  .altai-split { grid-template-columns: 1fr 1fr; gap: 6rem; }
+  .altai-split--reverse .altai-split__media { order: 2; }
+}
+
+.altai-split__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--altai-radius);
+}
+
+.altai-split__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s ease;
+}
+
+.altai-split__media:hover img { transform: scale(1.03); }
+
+.altai-split__badge {
+  position: absolute;
+  left: 1.25rem;
+  bottom: 1.25rem;
+  padding: 0.9rem 1.2rem;
+  background: rgba(13, 17, 15, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--altai-line-light);
+  border-radius: var(--altai-radius);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--altai-light);
+}
+
+.altai-split__badge strong {
+  display: block;
+  font-family: var(--altai-font-heading);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--altai-gold);
+}
+
+.altai-split__body .altai-rte p {
+  margin: 1.25rem 0 0;
+  color: var(--altai-light-muted);
+  text-wrap: pretty;
+}
+
+.altai-split__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2.5rem 0;
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--altai-line-light);
+  border-bottom: 1px solid var(--altai-line-light);
+}
+
+.altai-split__stats strong {
+  display: block;
+  font-family: var(--altai-font-heading);
+  font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--altai-gold);
+}
+
+.altai-split__stats span {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--altai-light-muted);
+}
+
+/* ---------- 4. Ritual ---------- */
+
+.altai-steps {
+  display: grid;
+  gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: altai-step;
+}
+
+@media (min-width: 750px) {
+  .altai-steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+}
+
+.altai-step {
+  position: relative;
+  padding-top: 2rem;
+  border-top: 1px solid var(--altai-text);
+}
+
+.altai-step__num {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-family: var(--altai-font-heading);
+  font-size: clamp(3.5rem, 6vw, 5rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1;
+  color: var(--altai-gold-deep);
+}
+
+.altai-step p {
+  margin: 1rem 0 0;
+  color: var(--altai-text-muted);
+}
+
+.altai-step__meta {
+  display: inline-block;
+  margin-top: 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--altai-text);
+}
+
+.altai-ritual__note {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 4.5rem;
+  padding: 2rem;
+  background: #fff;
+  border: 1px solid var(--altai-line);
+  border-radius: var(--altai-radius);
+}
+
+@media (min-width: 750px) {
+  .altai-ritual__note { flex-direction: row; align-items: center; padding: 2rem 2.5rem; }
+}
+
+.altai-ritual__note p {
+  margin: 0;
+  max-width: 40rem;
+  font-family: var(--altai-font-heading);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.3;
+}
+
+/* ---------- 5. Reviews & FAQ ---------- */
+
+.altai-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--altai-light-muted);
+}
+
+.altai-stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--altai-gold);
+}
+
+.altai-stars svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+.altai-reviews {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 750px) {
+  .altai-reviews { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 990px) {
+  .altai-reviews { grid-template-columns: repeat(3, 1fr); }
+}
+
+.altai-review {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 2.25rem 2rem;
+  border: 1px solid var(--altai-line-light);
+  border-radius: var(--altai-radius);
+  background: rgba(244, 246, 244, 0.03);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.altai-review:hover {
+  border-color: rgba(212, 175, 55, 0.45);
+  background: rgba(244, 246, 244, 0.05);
+}
+
+.altai-review blockquote {
+  margin: 0;
+  font-family: var(--altai-font-heading);
+  font-size: 1.35rem;
+  line-height: 1.4;
+  color: var(--altai-light);
+}
+
+.altai-review figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--altai-line-light);
+  font-size: 0.85rem;
+}
+
+.altai-review figcaption strong { font-weight: 500; color: var(--altai-light); }
+.altai-review figcaption span { color: var(--altai-light-muted); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+.altai-faq-wrap {
+  display: grid;
+  gap: 3rem;
+  margin-top: 7rem;
+  padding-top: 5rem;
+  border-top: 1px solid var(--altai-line-light);
+}
+
+@media (min-width: 990px) {
+  .altai-faq-wrap { grid-template-columns: 5fr 7fr; gap: 6rem; }
+}
+
+.altai-faq { border-top: 1px solid var(--altai-line-light); }
+
+.altai-faq details { border-bottom: 1px solid var(--altai-line-light); }
+
+.altai-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.6rem 0;
+  font-family: var(--altai-font-heading);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  line-height: 1.3;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.3s ease;
+}
+
+.altai-faq summary::-webkit-details-marker { display: none; }
+.altai-faq summary:hover { color: var(--altai-gold); }
+
+.altai-faq summary:focus-visible {
+  outline: 2px solid var(--altai-gold);
+  outline-offset: 4px;
+}
+
+.altai-faq__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--altai-line-light);
+  border-radius: 50%;
+  transition: border-color 0.3s ease, transform 0.4s ease;
+}
+
+.altai-faq__icon::before,
+.altai-faq__icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 1px;
+  background: var(--altai-gold);
+  transform: translate(-50%, -50%);
+}
+
+.altai-faq__icon::after { transform: translate(-50%, -50%) rotate(90deg); transition: opacity 0.3s ease; }
+
+.altai-faq details[open] .altai-faq__icon { border-color: var(--altai-gold); transform: rotate(180deg); }
+.altai-faq details[open] .altai-faq__icon::after { opacity: 0; }
+
+.altai-faq__answer {
+  padding: 0 3.5rem 1.75rem 0;
+  color: var(--altai-light-muted);
+}
+
+.altai-faq__answer p { margin: 0 0 0.75rem; }
+.altai-faq__answer p:last-child { margin-bottom: 0; }
+
+.altai-closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 7rem;
+  padding: 4rem 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: var(--altai-radius);
+  text-align: center;
+  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.12), transparent 65%);
+}
+
+.altai-closing .altai-btn { margin-top: 2.25rem; }
+
+.altai-closing small {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--altai-light-muted);
+}
+
+/* ---------- Reveal on scroll (enabled by JS only) ---------- */
+
+.altai-js [data-altai-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--altai-delay, 0s);
+}
+
+.altai-js [data-altai-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .altai-hero__media img { animation: none; transform: none; }
+  .altai-js [data-altai-reveal] { opacity: 1; transform: none; transition: none; }
+  .altai-btn, .altai-split__media img { transition: none; }
+}

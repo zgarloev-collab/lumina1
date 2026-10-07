@@ -1,0 +1,9 @@
+{%- comment -%}
+  Loads fonts, styles and scripts for the Altai Shilajit landing sections.
+  Safe to render from every section: browsers de-duplicate identical URLs.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap">
+{{ 'altai-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'altai-landing.js' | asset_url }}" defer="defer"></script>

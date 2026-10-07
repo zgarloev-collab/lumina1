@@ -1,0 +1,234 @@
+{
+  "sections": {
+    "hero": {
+      "type": "altai-hero",
+      "settings": {
+        "eyebrow": "Premium Purified Siberian Mineral Resin",
+        "heading": "Raw mountain energy. <em>Unbroken focus.</em>",
+        "subheading": "Leave daily fatigue in the valley. Altai Shilajit delivers 85+ trace minerals and naturally rich fulvic acid, hand-harvested from rock crevices above 3,000 meters.",
+        "usp_1": "85+ trace minerals",
+        "usp_2": "Rich in fulvic acid",
+        "usp_3": "Harvested at 3,000+ m",
+        "button_label": "Shop Pure Resin",
+        "secondary_label": "Discover the ritual",
+        "secondary_link": "#altai-ritual",
+        "stat_1_value": "85+",
+        "stat_1_label": "Trace minerals",
+        "stat_2_value": "3,000 m",
+        "stat_2_label": "Harvest altitude",
+        "stat_3_value": "100%",
+        "stat_3_label": "Lab-certified resin"
+      }
+    },
+    "features": {
+      "type": "altai-features",
+      "blocks": {
+        "feature_pure": {
+          "type": "feature",
+          "settings": {
+            "icon": "droplet",
+            "title": "100% Pure Resin",
+            "text": "Never powdered, never diluted, never compromised. Our shilajit stays in its natural resin state — the most bioavailable form nature intended."
+          }
+        },
+        "feature_minerals": {
+          "type": "feature",
+          "settings": {
+            "icon": "gem",
+            "title": "85+ Trace Minerals",
+            "text": "Packed with naturally occurring fulvic acid and ionic minerals like magnesium, zinc and iron to support clean, sustained daily energy."
+          }
+        },
+        "feature_lab": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Lab Certified",
+            "text": "Every batch undergoes strict third-party laboratory verification for purity and safety — screened and cleared for heavy metals before it reaches you."
+          }
+        }
+      },
+      "block_order": ["feature_pure", "feature_minerals", "feature_lab"],
+      "settings": {
+        "eyebrow": "Why Altai",
+        "heading": "Tested by Science. <em>Proven by Nature.</em>",
+        "subheading": "Three uncompromising standards behind every jar of Altai Shilajit."
+      }
+    },
+    "source": {
+      "type": "altai-source",
+      "settings": {
+        "reverse": false,
+        "badge_value": "Altai, Siberia",
+        "badge_label": "50.4° N · 86.6° E",
+        "eyebrow": "The Source",
+        "heading": "Born in <em>the Rocks</em>",
+        "text": "<p>High in the Altai Mountains, where the air thins and glaciers carve the stone, a rare resin forms over centuries. Ancient alpine plants decompose deep inside rock crevices, compressed by mountain pressure and slowly enriched by mineral-laden glacial waters.</p><p>Each summer, as the sun warms the cliffs, the resin seeps to the surface. We harvest it by hand above 3,000 meters, then gently purify it with cold glacial water — preserving centuries of mountain intelligence to fuel modern lives.</p>",
+        "stat_1_value": "300+ yrs",
+        "stat_1_label": "To form",
+        "stat_2_value": "3,000 m",
+        "stat_2_label": "Altitude",
+        "stat_3_value": "By hand",
+        "stat_3_label": "Harvested",
+        "button_label": "Our Story"
+      }
+    },
+    "ritual": {
+      "type": "altai-ritual",
+      "blocks": {
+        "step_measure": {
+          "type": "step",
+          "settings": {
+            "title": "Measure",
+            "text": "Each morning, take a pea-sized drop of resin from the jar.",
+            "meta": "≈ 300 mg · once daily"
+          }
+        },
+        "step_dissolve": {
+          "type": "step",
+          "settings": {
+            "title": "Dissolve",
+            "text": "Stir it into warm water, herbal tea, or warm milk until fully dissolved. Keep it below boiling to protect the minerals.",
+            "meta": "Warm, never boiling"
+          }
+        },
+        "step_rise": {
+          "type": "step",
+          "settings": {
+            "title": "Sip & Rise",
+            "text": "Sip slowly as the resin turns your cup a deep amber gold — then carry that steady mountain energy into your day.",
+            "meta": "Golden daily energy"
+          }
+        }
+      },
+      "block_order": ["step_measure", "step_dissolve", "step_rise"],
+      "settings": {
+        "eyebrow": "The Daily Ritual",
+        "heading": "Sixty seconds to <em>golden energy</em>",
+        "subheading": "A simple morning ritual, practised in the mountains for centuries — now made for modern routines.",
+        "note": "One 30 g jar. Sixty mornings of steady, mineral-rich energy.",
+        "button_label": "Shop Pure Resin"
+      }
+    },
+    "reviews_faq": {
+      "type": "altai-reviews-faq",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "I replaced my second coffee with this. Clean, steady energy through the afternoon — and no crash.",
+            "author": "Daniel R.",
+            "detail": "Austin, TX"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "It's genuinely a resin, not a powder in a capsule. The published lab report was the deciding factor for me.",
+            "author": "Maya K.",
+            "detail": "London, UK"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Part of my morning tea now. My deep-work blocks feel sharper and far more sustained.",
+            "author": "Jonas W.",
+            "detail": "Berlin, DE"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Earthy and smoky. Stirred into warm oat milk with honey, it's become the best part of my morning.",
+            "author": "Priya S.",
+            "detail": "Toronto, CA"
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Training through long weeks feels noticeably smoother. I don't skip it on race season mornings.",
+            "author": "Alex T.",
+            "detail": "Boulder, CO"
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Beautiful jar, transparent sourcing, and batch test results you can actually read. That's rare.",
+            "author": "Sofia L.",
+            "detail": "Milan, IT"
+          }
+        },
+        "faq_taste": {
+          "type": "faq",
+          "settings": {
+            "question": "What does Altai Shilajit taste like?",
+            "answer": "<p>Pure shilajit is earthy, smoky and slightly bitter, with a deep mineral finish — similar to a strong black tea. Dissolving it in warm tea or milk, or adding a little raw honey, softens the flavor beautifully.</p>"
+          }
+        },
+        "faq_safety": {
+          "type": "faq",
+          "settings": {
+            "question": "Is it tested for heavy metals and safety?",
+            "answer": "<p>Yes. Every batch is purified and then verified by an independent, accredited third-party laboratory for heavy metals (lead, mercury, arsenic and cadmium), microbial contaminants and purity.</p><p>Only batches that pass strict limits are released, and the certificate of analysis for your batch is available on request.</p>"
+          }
+        },
+        "faq_speed": {
+          "type": "faq",
+          "settings": {
+            "question": "How fast will I feel the energy?",
+            "answer": "<p>Many people notice a gentle, steady lift within 30–60 minutes of their morning cup. The fuller benefits of a mineral-rich routine build with consistent daily use over 2–4 weeks. Individual results vary.</p>"
+          }
+        },
+        "faq_dose": {
+          "type": "faq",
+          "settings": {
+            "question": "How much should I take, and how long does a jar last?",
+            "answer": "<p>Take a pea-sized portion (about 300 mg) once a day. A 30 g jar provides roughly 60–100 servings. If you are pregnant, nursing or taking medication, consult your healthcare provider first.</p>"
+          }
+        },
+        "faq_storage": {
+          "type": "faq",
+          "settings": {
+            "question": "Why does the resin harden or soften?",
+            "answer": "<p>That's the sign of genuine resin. It firms up in cool temperatures and softens with warmth. Store the jar sealed in a cool, dry place away from direct sunlight.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "faq_taste",
+        "faq_safety",
+        "faq_speed",
+        "faq_dose",
+        "faq_storage"
+      ],
+      "settings": {
+        "eyebrow": "Rituals in Real Life",
+        "heading": "Felt from the <em>first morning</em>",
+        "rating_text": "4.9 / 5 from 2,400+ verified reviews",
+        "faq_eyebrow": "Questions",
+        "faq_heading": "Everything you <em>need to know</em>",
+        "faq_text": "Still curious? Our team replies to every message within one business day.",
+        "closing_heading": "Bring the mountain <em>home</em>",
+        "closing_text": "Free shipping on every order. 60-day ritual guarantee — love it, or your money back.",
+        "button_label": "Shop Pure Resin",
+        "disclaimer": "These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease."
+      }
+    }
+  },
+  "order": ["hero", "features", "source", "ritual", "reviews_faq"]
+}

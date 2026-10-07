@@ -1,0 +1,72 @@
+{% render 'altai-assets' %}
+
+<section class="altai-section altai-pad" id="altai-features-{{ section.id }}" aria-labelledby="altai-features-title-{{ section.id }}">
+  <div class="altai-container">
+    <header class="altai-section-head" data-altai-reveal>
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="altai-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="altai-heading altai-h2" id="altai-features-title-{{ section.id }}">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="altai-lede">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="altai-features">
+      {%- for block in section.blocks -%}
+        <article class="altai-feature" {{ block.shopify_attributes }} data-altai-reveal style="--altai-delay: {{ forloop.index0 | times: 0.12 }}s">
+          <div class="altai-feature__top">
+            <span class="altai-feature__icon">{% render 'altai-icon', name: block.settings.icon %}</span>
+            <span class="altai-feature__num" aria-hidden="true">0{{ forloop.index }}</span>
+          </div>
+          <h3 class="altai-heading altai-h3">{{ block.settings.title | escape }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Altai · Features",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Altai" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Tested by Science. <em>Proven by Nature.</em>" },
+    { "type": "inline_richtext", "id": "subheading", "label": "Subheading", "default": "Three uncompromising standards behind every jar of Altai Shilajit." }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "droplet", "label": "Resin drop" },
+            { "value": "gem", "label": "Mineral" },
+            { "value": "shield", "label": "Shield" }
+          ],
+          "default": "droplet"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "100% Pure Resin" },
+        { "type": "inline_richtext", "id": "text", "label": "Text", "default": "Never powdered, never diluted. Our shilajit stays in its natural resin form for maximum bioavailability." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Altai · Features",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "droplet", "title": "100% Pure Resin" } },
+        { "type": "feature", "settings": { "icon": "gem", "title": "85+ Trace Minerals" } },
+        { "type": "feature", "settings": { "icon": "shield", "title": "Lab Certified" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
