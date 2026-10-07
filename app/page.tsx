@@ -1,4 +1,3 @@
-import Script from 'next/script'
 import { AltaiHero } from '@/components/altai/hero'
 import { AltaiFeatures } from '@/components/altai/features'
 import { AltaiSource } from '@/components/altai/source'
@@ -13,7 +12,6 @@ export default function Page() {
       <AltaiSource />
       <AltaiRitual />
       <AltaiReviewsFaq />
-      <Script src="/altai-landing.js" strategy="afterInteractive" />
     </main>
   )
 }

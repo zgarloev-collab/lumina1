@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import { SiteHeader } from '@/components/site-header'
 import './globals.css'
-import '../shopify-theme/assets/altai-landing.css'
 
 const heading = Cormorant_Garamond({
   subsets: ['latin'],
