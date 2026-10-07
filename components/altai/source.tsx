@@ -1,8 +1,6 @@
 import { AltaiIcon } from './icon'
 import { Reveal } from './reveal'
 
-const SOURCE_IMAGE = 'https://images.pexels.com/photos/17056224/pexels-photo-17056224.jpeg?auto=compress&cs=tinysrgb&w=1400'
-
 const stats = [
   { value: '300+ yrs', label: 'To form' },
   { value: '3,000 m', label: 'Altitude' },
@@ -15,9 +13,10 @@ export function AltaiSource() {
       <div className="mx-auto max-w-[1240px] px-5 md:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <Reveal className="relative aspect-[4/5] overflow-hidden rounded-sm">
+            {/* eslint-disable @next/next/no-img-element */}
             <img
-              src={SOURCE_IMAGE}
-              alt="Dark glossy shilajit resin forming in ancient mountain rock crevices surrounded by wild herbs"
+              src="/images/altai-source.png"
+              alt="Dark glossy shilajit resin forming in ancient mountain rock crevices surrounded by wild Siberian herbs"
               width={1200}
               height={1500}
               loading="lazy"

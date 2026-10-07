@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { AltaiIcon } from './icon'
 
-const MOUNTAIN_IMAGE = 'https://images.pexels.com/photos/38351312/pexels-photo-38351312.jpeg?auto=compress&cs=tinysrgb&w=2400'
-
 const stats = [
   { value: '85+', label: 'Trace minerals' },
   { value: '3,000 m', label: 'Harvest altitude' },
@@ -18,22 +16,24 @@ const usps = [
 export function AltaiHero() {
   return (
     <section className="relative flex min-h-svh items-center overflow-hidden bg-[#1E2522]" aria-labelledby="altai-hero-title">
+      {/* Mountain background — local image guaranteed to load */}
       <div className="absolute inset-0 z-0">
         {/* eslint-disable @next/next/no-img-element */}
         <img
-          src={MOUNTAIN_IMAGE}
-          alt="Misty snow-capped Altai Mountains with a turquoise glacial river flowing through the valley"
-          width={2400}
-          height={1600}
+          src="/images/altai-hero.png"
+          alt="Misty snow-capped Altai Mountains with turquoise glacial river in morning light"
+          width={1920}
+          height={1080}
           className="altai-hero-zoom size-full object-cover"
         />
       </div>
 
+      {/* Dark gradient overlay for readability and atmospheric depth */}
       <div
         className="absolute inset-0 z-10"
         style={{
           background:
-            'linear-gradient(180deg, rgba(13,17,15,0.25) 0%, rgba(13,17,15,0.45) 40%, rgba(13,17,15,0.92) 100%), linear-gradient(90deg, rgba(13,17,15,0.75) 0%, rgba(13,17,15,0.15) 60%, rgba(13,17,15,0.4) 100%)',
+            'linear-gradient(180deg, rgba(30,37,34,0.5) 0%, rgba(30,37,34,0.6) 45%, rgba(30,37,34,0.9) 100%), linear-gradient(90deg, rgba(30,37,34,0.7) 0%, rgba(30,37,34,0.1) 60%, rgba(30,37,34,0.4) 100%)',
         }}
       />
 
@@ -107,18 +107,94 @@ export function AltaiHero() {
             </ul>
           </div>
 
-          <div className="altai-hero-fade hidden lg:block" style={{ animationDelay: '0.3s' }}>
-            <div className="relative">
-              <div className="absolute -inset-8 rounded-full bg-[#D4AF37]/10 blur-3xl" style={{ animation: 'altai-pulse-gold 4s ease-in-out infinite' }} />
-              {/* eslint-disable @next/next/no-img-element */}
-              <img
-                src="/images/product-resin.png"
-                alt="Open premium round black glass jar of Altai Shilajit showing the mirror-like surface of pure dark mineral resin"
-                width={1024}
-                height={1024}
-                className="relative z-10 w-full rounded-sm object-cover shadow-2xl"
-                style={{ filter: 'brightness(1.05) contrast(1.1)' }}
+          {/* CSS-styled luxury black glass jar — no external image needed */}
+          <div className="altai-hero-fade hidden lg:flex" style={{ animationDelay: '0.3s' }}>
+            <div className="relative mx-auto flex max-w-sm items-center justify-center">
+              {/* Pulsing gold aura behind the jar */}
+              <div
+                className="absolute -inset-12 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%)',
+                  animation: 'altai-pulse-gold 4s ease-in-out infinite',
+                }}
               />
+
+              {/* The jar — pure CSS luxury black glass */}
+              <div className="relative z-10 aspect-square w-full max-w-[400px]">
+                {/* Matte black lid */}
+                <div
+                  className="absolute left-1/2 top-0 z-20 h-[22%] w-[60%] -translate-x-1/2 rounded-t-[50%] border border-[#3a3f3c] border-b-0"
+                  style={{
+                    background: 'linear-gradient(180deg, #2a2e2c 0%, #1a1e1c 50%, #151917 100%)',
+                    boxShadow: 'inset 0 2px 8px rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.6)',
+                  }}
+                />
+
+                {/* Jar rim */}
+                <div
+                  className="absolute left-1/2 top-[20%] z-30 h-[5%] w-[64%] -translate-x-1/2 rounded-full border border-[#D4AF37]/20"
+                  style={{
+                    background: 'linear-gradient(90deg, #1a1e1c, #2a2e2c, #1a1e1c)',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.5)',
+                  }}
+                />
+
+                {/* Jar body — semi-transparent dark glass */}
+                <div
+                  className="absolute left-1/2 top-[22%] z-10 aspect-[5/6] w-[85%] -translate-x-1/2 rounded-b-[50%] rounded-t-[20%] border-2"
+                  style={{
+                    borderColor: 'rgba(212,175,55,0.15)',
+                    background: 'linear-gradient(160deg, rgba(20,24,22,0.85) 0%, rgba(15,18,16,0.92) 50%, rgba(10,13,11,0.95) 100%)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)',
+                    boxShadow:
+                      'inset 0 4px 20px rgba(0,0,0,0.5), inset 0 -10px 30px rgba(0,0,0,0.4), 0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(212,175,55,0.05)',
+                  }}
+                >
+                  {/* Glossy highlight on jar body */}
+                  <div
+                    className="absolute inset-0 rounded-b-[50%] rounded-t-[20%]"
+                    style={{
+                      background:
+                        'linear-gradient(120deg, rgba(255,255,255,0.08) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.03) 100%)',
+                    }}
+                  />
+
+                  {/* Inner resin surface — deep glossy black */}
+                  <div
+                    className="absolute inset-[10%] rounded-b-[50%] rounded-t-[15%]"
+                    style={{
+                      background:
+                        'radial-gradient(ellipse at 40% 30%, rgba(45,50,47,0.6) 0%, rgba(15,18,16,0.9) 60%, rgba(5,8,6,0.95) 100%)',
+                      boxShadow: 'inset 0 4px 16px rgba(0,0,0,0.8)',
+                    }}
+                  >
+                    {/* Mirror-like resin sheen */}
+                    <div
+                      className="absolute left-[15%] top-[8%] h-[30%] w-[40%] rounded-full opacity-40"
+                      style={{
+                        background: 'radial-gradient(ellipse, rgba(212,175,55,0.15) 0%, transparent 70%)',
+                        filter: 'blur(8px)',
+                      }}
+                    />
+                  </div>
+
+                  {/* Gold brand mark */}
+                  <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2 text-center">
+                    <p className="font-serif text-sm font-medium tracking-[0.3em] text-[#D4AF37]/50">ALTAI</p>
+                    <p className="mt-0.5 text-[8px] uppercase tracking-[0.2em] text-[#D4AF37]/30">Pure Resin</p>
+                  </div>
+                </div>
+
+                {/* Reflection shadow beneath jar */}
+                <div
+                  className="absolute bottom-[2%] left-1/2 h-[4%] w-[70%] -translate-x-1/2 rounded-full"
+                  style={{
+                    background: 'radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%)',
+                    filter: 'blur(4px)',
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

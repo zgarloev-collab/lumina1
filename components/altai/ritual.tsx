@@ -2,8 +2,6 @@ import Link from 'next/link'
 import { AltaiIcon } from './icon'
 import { Reveal } from './reveal'
 
-const RITUAL_IMAGE = 'https://images.pexels.com/photos/9709410/pexels-photo-9709410.jpeg?auto=compress&cs=tinysrgb&w=1600'
-
 const steps = [
   {
     title: 'Measure',
@@ -27,17 +25,47 @@ export function AltaiRitual() {
     <section id="altai-ritual" className="bg-[#F4F6F4] py-20 lg:py-32" aria-labelledby="altai-ritual-title">
       <div className="mx-auto max-w-[1240px] px-5 md:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <Reveal className="relative aspect-[5/4] overflow-hidden rounded-sm">
-            {/* eslint-disable @next/next/no-img-element */}
-            <img
-              src={RITUAL_IMAGE}
-              alt="A drop of dark amber shilajit resin dissolving in warm water, creating swirling golden and amber smoke-like patterns in soft morning light"
-              width={1600}
-              height={1280}
-              loading="lazy"
-              className="size-full object-cover transition-transform duration-[1.2s] ease-out hover:scale-105"
+          <Reveal className="relative">
+            {/* Amber-gold radial glow behind the image */}
+            <div
+              className="absolute -inset-6 rounded-sm"
+              style={{
+                background:
+                  'radial-gradient(ellipse at 50% 40%, rgba(212,175,55,0.22) 0%, rgba(176,140,34,0.1) 40%, transparent 70%)',
+                animation: 'altai-pulse-gold 5s ease-in-out infinite',
+              }}
+              aria-hidden="true"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1E2522]/30 via-transparent to-transparent" />
+
+            <div className="relative aspect-[5/4] overflow-hidden rounded-sm border border-[#D4AF37]/20 shadow-[0_20px_60px_-20px_rgba(212,175,55,0.3)]">
+              {/* eslint-disable @next/next/no-img-element */}
+              <img
+                src="/images/product-jar.png"
+                alt="Premium black glass jar of Altai Shilajit resin on a frosted stone surface in warm morning light"
+                width={1024}
+                height={820}
+                loading="lazy"
+                className="size-full object-cover transition-transform duration-[1.2s] ease-out hover:scale-105"
+              />
+              {/* Warm amber overlay to suggest the golden dissolving effect */}
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    'radial-gradient(ellipse at 60% 50%, rgba(212,175,55,0.12) 0%, transparent 50%), linear-gradient(180deg, transparent 60%, rgba(30,37,34,0.25) 100%)',
+                }}
+              />
+            </div>
+
+            {/* Floating amber glow accent */}
+            <div
+              className="pointer-events-none absolute -bottom-4 -right-4 size-32 rounded-full opacity-30"
+              style={{
+                background: 'radial-gradient(circle, rgba(212,175,55,0.4) 0%, transparent 70%)',
+                filter: 'blur(20px)',
+              }}
+              aria-hidden="true"
+            />
           </Reveal>
 
           <Reveal delay={0.15}>
