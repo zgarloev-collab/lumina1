@@ -13,8 +13,8 @@ import { useCart, formatPrice } from './cart-context'
  * TODO: replace FALLBACK_LINK with the real 50g buy.stripe.com link once available.
  */
 
+const PAYMENT_LINK_50G = 'https://buy.stripe.com/00waEX8z37AA3p7baEdby00'
 const PAYMENT_LINK_100G = 'https://buy.stripe.com/9B67sL2aF9IIf7P0w0dby01'
-const PAYMENT_LINK_50G = PAYMENT_LINK_100G
 
 function handleCheckout(
   items: { variantId: string; variantLabel: string; quantity: number }[],
