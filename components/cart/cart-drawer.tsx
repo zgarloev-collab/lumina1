@@ -9,24 +9,21 @@ import { useCart, formatPrice } from './cart-context'
  * STRIPE PAYMENT LINK CHECKOUT
  *
  * Redirects directly to Stripe-hosted Payment Links — no SDK, no backend,
- * no freezing. The 100g link is the primary checkout destination.
- * TODO: replace FALLBACK_LINK with the real 50g buy.stripe.com link once available.
+ * no freezing.
  */
 
 const PAYMENT_LINK_50G = 'https://buy.stripe.com/00waEX8z37AA3p7baEdby00'
 const PAYMENT_LINK_100G = 'https://buy.stripe.com/9B67sL2aF9IIf7P0w0dby01'
 
-function handleCheckout(
-  items: { variantId: string; variantLabel: string; quantity: number }[],
-): void {
-  if (items.length === 0) return
+function getCheckoutUrl(items: { variantId: string }[]): string | null {
+  if (items.length === 0) return null
 
   const has100g = items.some((item) => item.variantId === '100g')
   const has50g = items.some((item) => item.variantId === '50g')
 
-  const url = has100g ? PAYMENT_LINK_100G : has50g ? PAYMENT_LINK_50G : PAYMENT_LINK_100G
-
-  window.location.href = url
+  if (has100g) return PAYMENT_LINK_100G
+  if (has50g) return PAYMENT_LINK_50G
+  return null
 }
 
 export function CartDrawer() {
@@ -182,8 +179,19 @@ export function CartDrawer() {
               type="button"
               onClick={() => {
                 if (isRedirecting) return
+                const url = getCheckoutUrl(items)
+                if (!url) {
+                  alert('Unable to start checkout. Please refresh the page and try again.')
+                  return
+                }
                 setIsRedirecting(true)
-                handleCheckout(items)
+                try {
+                  window.location.href = url
+                  setTimeout(() => setIsRedirecting(false), 5000)
+                } catch {
+                  setIsRedirecting(false)
+                  alert('Unable to redirect to checkout. Please try again.')
+                }
               }}
               className="group relative flex h-14 w-full cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full bg-[#D4AF37] text-xs font-semibold uppercase tracking-[0.2em] text-[#1E2522] shadow-[0_10px_30px_-12px_rgba(212,175,55,0.8)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#C9A230] hover:shadow-[0_18px_40px_-14px_rgba(212,175,55,0.9)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1E2522] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F4F6F4]"
             >
