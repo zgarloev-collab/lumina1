@@ -18,11 +18,57 @@ const body = Inter({
   variable: '--altai-body-family',
 })
 
+const siteUrl = 'https://altaishilajitbio.com'
+
 export const metadata: Metadata = {
-  title: 'Altai Shilajit — Premium Purified Siberian Mineral Resin',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Pure Altai Shilajit Resin | 100% Organic Mineral Supplement – Altai Labs',
+    template: '%s – Altai Labs',
+  },
   description:
-    'Raw mountain energy and focus. Pure Siberian shilajit resin with 85+ trace minerals and fulvic acid, hand-harvested above 3,000 meters and third-party lab certified.',
-  generator: 'v0.app',
+    'Buy authentic Altai shilajit resin ethically hand-harvested at 3,000m in Siberia. Packed with 85+ trace minerals and rich fulvic acid for raw daily energy, sharp deep-work focus, and immune support. Free worldwide shipping always.',
+  keywords: [
+    'Altai shilajit',
+    'shilajit resin',
+    'organic shilajit',
+    'pure shilajit',
+    'Siberian shilajit',
+    'fulvic acid',
+    'trace minerals',
+    'mineral supplement',
+    'Altai Labs',
+  ],
+  authors: [{ name: 'Altai Labs' }],
+  creator: 'Altai Labs',
+  publisher: 'Altai Labs',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteUrl,
+    siteName: 'Altai Labs',
+    title: 'Pure Altai Shilajit Resin | 100% Organic Mineral Supplement – Altai Labs',
+    description:
+      'Buy authentic Altai shilajit resin ethically hand-harvested at 3,000m in Siberia. Packed with 85+ trace minerals and rich fulvic acid for raw daily energy, sharp deep-work focus, and immune support. Free worldwide shipping always.',
+    images: [
+      {
+        url: '/images/altai-hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Pure Altai Shilajit Resin by Altai Labs',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pure Altai Shilajit Resin | 100% Organic Mineral Supplement – Altai Labs',
+    description:
+      'Buy authentic Altai shilajit resin ethically hand-harvested at 3,000m in Siberia. 85+ trace minerals, rich fulvic acid. Free worldwide shipping always.',
+    images: ['/images/altai-hero.png'],
+  },
   icons: {
     icon: [
       { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
@@ -30,6 +76,17 @@ export const metadata: Metadata = {
       { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: '/apple-icon.png',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 }
 

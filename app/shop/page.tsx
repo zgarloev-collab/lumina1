@@ -4,9 +4,27 @@ import { ProductBuyBox } from '@/components/product/buy-box'
 import { ProductDetailsTabs } from '@/components/product/details-tabs'
 
 export const metadata: Metadata = {
-  title: 'Pure Altai Shilajit Resin — Shop | ALTAI LABS',
+  title: 'Shop Pure Altai Shilajit Resin (50g & 100g) | Premium Quality',
   description:
-    'Hand-harvested above 3,000 meters in the Siberian Altai. 85+ ionic minerals, rich in fulvic acid, third-party lab tested. From $49.',
+    'Order raw Altai shilajit mineral resin in premium UV-protective black glass jars. Independent third-party laboratory tested for safe heavy metal clearance. Choose 50g Standard or 100g Value Pack. Free shipping included.',
+  alternates: {
+    canonical: '/shop',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://altaishilajitbio.com/shop',
+    title: 'Shop Pure Altai Shilajit Resin (50g & 100g) | Premium Quality – Altai Labs',
+    description:
+      'Order raw Altai shilajit mineral resin in premium UV-protective black glass jars. Independent third-party laboratory tested for safe heavy metal clearance. Choose 50g Standard or 100g Value Pack. Free shipping included.',
+    images: [
+      {
+        url: '/images/product-jar.png',
+        width: 1200,
+        height: 630,
+        alt: 'Pure Altai Shilajit Resin in premium black glass jar',
+      },
+    ],
+  },
 }
 
 export default function ShopPage() {
