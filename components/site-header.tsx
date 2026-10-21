@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/altay-vs-himalayan-shilajit', label: 'Altay vs Himalayan' },
+  { href: '/pages/certificates', label: 'Certificates' },
   { href: '/shop', label: 'Shop' },
 ]
 
